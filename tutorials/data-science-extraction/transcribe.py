@@ -34,9 +34,11 @@ def _poll(operation, upper_bounds):
 def transcribe(bucket, path, metadata):
     client = speech.Client()
 
-    sample = client.sample(source_uri='gs://{}/{}'.format(bucket, path),
-                           encoding=speech.Encoding.LINEAR16,
-                           sample_rate_hertz=metadata['rate'])
+    sample = client.sample(
+        source_uri=f'gs://{bucket}/{path}',
+        encoding=speech.Encoding.LINEAR16,
+        sample_rate_hertz=metadata['rate'],
+    )
     operation = sample.long_running_recognize(
         language_code='en-US',
         max_alternatives=1,
@@ -45,8 +47,7 @@ def transcribe(bucket, path, metadata):
     operation = _poll(operation, file_size_megs)
 
     if operation.error:
-        logging.error('Error transcribing gs://{}/{}: {}'.format(
-            bucket, path, operation.error))
+        logging.error(f'Error transcribing gs://{bucket}/{path}: {operation.error}')
         raise TranscriptionError(operation.error)
     else:
         best_transcriptions = [r.alternatives[0] for r in operation.results
@@ -56,7 +57,7 @@ def transcribe(bucket, path, metadata):
 
 def main(uris, rate, size):
     for uri in uris:
-        logging.info('Transcribing {}'.format(uri))
+        logging.info(f'Transcribing {uri}')
 
         bucket, path = uri[5:].split('/', 1)
         transcriptions, metadata = transcribe(bucket, path, {
@@ -64,7 +65,7 @@ def main(uris, rate, size):
             'rate': rate,
         })
         for t in transcriptions:
-            print('({}): {}\n'.format(t.confidence, t.transcript))
+            print(f'({t.confidence}): {t.transcript}\n')
 
 
 def _gcs_uri(text):

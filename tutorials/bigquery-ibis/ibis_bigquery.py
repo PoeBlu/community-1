@@ -55,7 +55,7 @@ print(table)
 try:
     doesnt_exist = conn.table('doesnt_exist')
 except Exception as exp:
-    print(str(exp))
+    print(exp)
     # Not found: Table bigquery-public-data:stackoverflow.doesnt_exist
 # [END bigquery_ibis_table_not_exist]
 
@@ -67,7 +67,7 @@ reddit_posts_table = conn.table('2018_05', database='fh-bigquery.reddit_posts')
 try:
     table.answer_count.upper()
 except AttributeError as exp:
-    print(str(exp))
+    print(exp)
     # 'IntegerColumn' object has no attribute 'upper'
 # [END bigquery_ibis_type_error]
 

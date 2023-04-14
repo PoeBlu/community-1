@@ -17,7 +17,7 @@ def stage_audio(data, metadata, destination_bucket=DESTINATION_BUCKET):
 
 def main(audio_files, destination_bucket):
     for filename in audio_files:
-        print('Uploading {}'.format(filename))
+        print(f'Uploading {filename}')
         with open(filename, 'rb') as f:
             print(stage_audio(
                 f.read(), {'name': filename}, destination_bucket))

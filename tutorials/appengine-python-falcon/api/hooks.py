@@ -20,4 +20,7 @@ def api_key(req, resp, resource, params):
 
 def say_bye_after_operation(req, resp, resource):
 
-    logging.info('Bye there at ' + str(time.time()) + ' and api_key=' + req.params.get('api_key'))
+    logging.info(
+        f'Bye there at {str(time.time())} and api_key='
+        + req.params.get('api_key')
+    )
