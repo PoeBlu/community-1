@@ -41,10 +41,10 @@ class JsonFileSource(filebasedsource.FileBasedSource):
         iterate over lines, while keeping the .tell() accurate.
         """
         while True:
-            line = f.readline()
-            if not line:
+            if line := f.readline():
+                yield line
+            else:
                 break
-            yield line
 
     def obj_iterator(self, file_name, offset_range_tracker):
         with self.open_file(file_name) as f:

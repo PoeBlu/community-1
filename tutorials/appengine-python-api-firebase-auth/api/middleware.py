@@ -22,6 +22,4 @@ class AuthMiddleware(object):
             req.context['auth_user'] = decoded_token
         except Exception as e:
             return False
-        if not decoded_token:
-            return False
-        return True
+        return bool(decoded_token)

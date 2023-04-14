@@ -31,11 +31,11 @@ def extract_syntax(transcriptions, metadata):
 
 def main(input_files):
     for line in fileinput.input(input_files):
-        logging.info('Analyzing "{}"'.format(line))
+        logging.info(f'Analyzing "{line}"')
 
         tokens, metadata = extract_syntax([line], {})
         for token in tokens:
-            print('{}: {}'.format(token.text_content, token.part_of_speech))
+            print(f'{token.text_content}: {token.part_of_speech}')
 
 
 if __name__ == '__main__':

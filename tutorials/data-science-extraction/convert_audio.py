@@ -18,7 +18,7 @@ def mp3_to_raw(data, metadata):
     # Write the data to a tmpfile, for conversion
     with tempdir() as dirname:
         src = os.path.join(dirname, metadata['name'])
-        dest = '{}.raw'.format(src[:src.rindex('.')])
+        dest = f"{src[:src.rindex('.')]}.raw"
         with open(src, 'wb') as f:
             f.write(data)
         audio = pydub.AudioSegment.from_mp3(src)
@@ -44,7 +44,7 @@ def mp3_to_raw(data, metadata):
 
 def main(mp3_filenames):
     for mp3_filename in mp3_filenames:
-        print('Converting {}'.format(mp3_filename))
+        print(f'Converting {mp3_filename}')
         with open(mp3_filename, 'r') as f:
             raw_data, metadata = mp3_to_raw(
                 f.read(), {'name': mp3_filename})
